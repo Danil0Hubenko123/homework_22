@@ -19,8 +19,19 @@ print('Усі пакети успішно імпортовано!')
 # ══════════════════════════════════════════════════════════════════════════════
 # 2. ЗАВАНТАЖЕННЯ ДАНИХ
 # ══════════════════════════════════════════════════════════════════════════════
-df_train = pd.read_csv('mod_04_hw_train_data.csv')
-df_valid  = pd.read_csv('mod_04_hw_valid_data.csv')
+import os
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
+BASE_URL = 'https://raw.githubusercontent.com/goitacademy/MACHINE-LEARNING-NEO/main/datasets/'
+
+try:
+    df_train = pd.read_csv(BASE_URL + 'mod_04_hw_train_data.csv')
+    df_valid  = pd.read_csv(BASE_URL + 'mod_04_hw_valid_data.csv')
+    print('Дані завантажено з GitHub.')
+except Exception:
+    df_train = pd.read_csv(os.path.join(script_dir, 'mod_04_hw_train_data.csv'))
+    df_valid  = pd.read_csv(os.path.join(script_dir, 'mod_04_hw_valid_data.csv'))
+    print('Дані завантажено з локальної папки.')
 
 print(f'\nТренувальний набір: {df_train.shape}')
 print(f'Валідаційний набір:  {df_valid.shape}')
@@ -138,7 +149,7 @@ axes[1,1].spines['top'].set_visible(False); axes[1,1].spines['right'].set_visibl
 
 plt.suptitle('EDA — Датасет прогнозування зарплати', fontsize=14, fontweight='bold')
 plt.tight_layout()
-plt.savefig('hw9_eda.png', dpi=150, bbox_inches='tight')
+plt.savefig(os.path.join(script_dir, 'hw9_eda.png'), dpi=150, bbox_inches='tight')
 plt.close()
 print('EDA графік збережено → hw9_eda.png')
 
@@ -280,7 +291,7 @@ axes[1].spines['top'].set_visible(False); axes[1].spines['right'].set_visible(Fa
 
 plt.suptitle('KNN Регресор — Прогнозування зарплати', fontsize=13, fontweight='bold')
 plt.tight_layout()
-plt.savefig('hw9_results.png', dpi=150, bbox_inches='tight')
+plt.savefig(os.path.join(script_dir, 'hw9_results.png'), dpi=150, bbox_inches='tight')
 plt.close()
 print('\nГрафік результатів збережено → hw9_results.png')
 
